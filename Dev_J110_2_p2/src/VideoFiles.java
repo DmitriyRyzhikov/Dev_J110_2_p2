@@ -12,7 +12,7 @@ public class VideoFiles extends MediaFiles {
     }
     public void setVideoResolution(VideoResolution videoResolution) {
         if(videoResolution == null)
-            throw new IllegalArgumentException("Ссылка на объект <videoResolution> не должна быть пустой");
+            throw new IllegalArgumentException("Ссылка на объект <videoResolution> не должна быть пустой.");
         this.videoResolution = videoResolution;
     }
     @Override
