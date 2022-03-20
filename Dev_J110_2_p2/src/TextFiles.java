@@ -21,11 +21,9 @@ public class TextFiles extends FilesAbstract {
         
         this.textFileFormat = textFileFormat;
     }
-
     public int getNumberOfPages() {
         return numberOfPages;
     }
-
     public final void setNumberOfPages(int numberOfPages) {
         if(numberOfPages <= 0)
             throw new IllegalArgumentException("Количество страниц должно быть больше ноля.");
