@@ -30,6 +30,7 @@ public class Main {
    1. эти два типа данных являются совместимыми;
    2. FilesAbstract является более широким типом по сравнению с MediaFiles.     
         */
+
         MediaFiles mfile1 = new MediaFiles("Main_Title_Theme-WESTWORLD", 18026574, "wav ", "Вступительная тема к сериалу WESTWORLD, Ramin Djawadi, 2018", 0, 1, 42);
         MediaFiles mfile2 = new MediaFiles("Poka", 4876441, "mp3 ", "\"Пока\", Алена Свиридова, 1998", 0, 3, 22);
         MediaFiles mfile3 = new MediaFiles("En_Aranjuez_Con_Tu_Amor", 19125332, "flac", "\"En Aranjuez Con Tu Amor\", Andrea Bocelli - Concerto, 2018", 0, 3, 35);
