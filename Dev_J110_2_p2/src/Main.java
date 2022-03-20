@@ -24,6 +24,7 @@ public class Main {
         FilesAbstract.printAll(files);
         
         System.out.println();
+        
 /*   Несмотря на то, что метод printAll(FilesAbstract[] files) работает с типом данных FilesAbstract, он превосходно спраяляется и c типами данных, для которых FilesAbstract является родительским типом.
    Передавая в метод printAll(FilesAbstract[] files) данные типа MediaFiles мы надеемся на положительный результат, т.к:
    1. эти два типа данных являются совместимыми;
