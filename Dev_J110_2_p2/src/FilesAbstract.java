@@ -14,10 +14,11 @@ public abstract class FilesAbstract {
     }
 
     public final void setFileName(String fileName) {
-        if(fileName == null)
+        if (fileName != null && !fileName.trim().isEmpty()) 
+            this.fileName = fileName.trim();
+        else
             throw new IllegalArgumentException("Необходимо указать имя файла.");
         
-        this.fileName = fileName;
     }
 
     public long getFileSize() {       
@@ -25,33 +26,36 @@ public abstract class FilesAbstract {
     }
 
     public final void setFileSize(long fileSize) {
-        if(fileSize <= 0)
-            throw new IllegalArgumentException("Размер файла должен быть больше ноля.");
-        
-        this.fileSize = fileSize;
+        if(fileSize > 0)
+            this.fileSize = fileSize;
+        else
+           throw new IllegalArgumentException("Размер файла должен быть больше ноля.");        
     }
     
+    //В одном из классов реализуйте статический метод printAll, печатающий данные о файлах из заданного массива. Данные должны выводиться в таблицу
+    
     public static void printAll(FilesAbstract[] files) {
-        
-        System.out.println("              File name           |    Size    |                                          Details");
+    //конструкция с методом concat() нужна, чтобы объединить в одно целое имя файла, его формат и точку, разделяющую их. Без этого плывут по ширине разделители столбцов.    
+        System.out.println("              File name         |    Size    |                                          Details");
         System.out.println(".........................................................................................................................................................................................................");
         for(FilesAbstract file : files) {
             if(file instanceof TextFiles)
-               System.out.printf("%26s.%s  | %-10d | Text. Pages:%s%n", file.getFileName(), ((TextFiles) file).getTextFileFormat(), file.getFileSize(), ((TextFiles) file).getNumberOfPages());
+               System.out.printf("%30s  | %10d | Text. Pages:%s%n", file.getFileName().concat(".").concat(((TextFiles) file).getTextFileFormat()), file.getFileSize(), ((TextFiles) file).getNumberOfPages());
             
             else if(file instanceof ImageFiles)
-               System.out.printf("%26s.%s   | %-10d | Image. Image size: %dx%d%n", file.getFileName(), ((ImageFiles) file).getImageFileFormat(), file.getFileSize(), ((ImageFiles) file).getImageSize().getImageFileWidth(), 
+               System.out.printf("%30s  | %10d | Image. Image size: %dx%d%n", file.getFileName().concat(".").concat(((ImageFiles) file).getImageFileFormat()), file.getFileSize(), ((ImageFiles) file).getImageSize().getImageFileWidth(), 
                                 ((ImageFiles) file).getImageSize().getImageFileHeight()); 
             
             else if(file instanceof MediaFiles && !(file instanceof VideoFiles))
-               System.out.printf("%26s.%s  | %-10d | Audio. %s, track duration - %02d:%02d:%02d%n", file.getFileName(), ((MediaFiles) file).getMediafileFormat(), file.getFileSize(), ((MediaFiles) file).getMediaFileDescription(), 
-                                ((MediaFiles) file).getMediaDuration().hour, ((MediaFiles) file).getMediaDuration().minute, ((MediaFiles) file).getMediaDuration().second);
+               System.out.printf("%30s  | %10d | Audio. %s, track duration - %02d:%02d:%02d%n", file.getFileName().concat(".").concat(((MediaFiles) file).getMediafileFormat()), file.getFileSize(), ((MediaFiles) file).getMediaFileDescription(), 
+                                ((MediaFiles) file).getMediaDuration().getHour(), ((MediaFiles) file).getMediaDuration().getMinute(), ((MediaFiles) file).getMediaDuration().getSecond());
             else
-               System.out.printf("%26s.%s   | %-10d | Video. %s, track duration - %02d:%02d:%02d, video resolution: %dx%d%n", file.getFileName(), ((VideoFiles) file).getMediafileFormat(), file.getFileSize(), ((VideoFiles) file).getMediaFileDescription(),
-                                ((VideoFiles) file).getMediaDuration().hour, ((VideoFiles) file).getMediaDuration().minute, ((VideoFiles) file).getMediaDuration().second, ((VideoFiles) file).getVideoResolution().getVideoFrameWidth(), 
+               System.out.printf("%30s  | %10d | Video. %s, track duration - %02d:%02d:%02d, video resolution: %dx%d%n", file.getFileName().concat(".").concat(((VideoFiles) file).getMediafileFormat()), file.getFileSize(), ((VideoFiles) file).getMediaFileDescription(),
+                                ((VideoFiles) file).getMediaDuration().getHour(), ((VideoFiles) file).getMediaDuration().getMinute(), ((VideoFiles) file).getMediaDuration().getSecond(), ((VideoFiles) file).getVideoResolution().getVideoFrameWidth(), 
                                 ((VideoFiles) file).getVideoResolution().getVideoFrameHeight()); 
       }
         System.out.println(".............................................................................................................................................................................................................");
   }
-        public abstract void print(); 
+       //методы, при помощи которых можно напечатать строковое представление размера изображения и длительности медиа файла   
+        public abstract void printFeatures(); 
 }
