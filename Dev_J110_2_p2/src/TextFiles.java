@@ -16,23 +16,27 @@ public class TextFiles extends FilesAbstract {
     }
 
     public final void setTextFileFormat(String textFileFormat) {
-        if(textFileFormat == null)
+        if (textFileFormat != null && !textFileFormat.trim().isEmpty())
+            this.textFileFormat = textFileFormat.trim();
+        else
             throw new IllegalArgumentException("Необходимо указать формат файла.");
         
-        this.textFileFormat = textFileFormat;
     }
     public int getNumberOfPages() {
         return numberOfPages;
     }
     public final void setNumberOfPages(int numberOfPages) {
-        if(numberOfPages <= 0)
+        if(numberOfPages > 0)
+            this.numberOfPages = numberOfPages;
+        else
             throw new IllegalArgumentException("Количество страниц должно быть больше ноля.");
         
-        this.numberOfPages = numberOfPages;
     }
+    
+    //методы, при помощи которых можно напечатать строковое представление размера изображения и длительности медиа файла   
     @Override
-    public void print() {
-        System.out.printf("Количество страниц в книге \"%s\" - %d%n", super.getFileName(), numberOfPages);
+    public void printFeatures() {
+        System.out.printf("Количество страниц в текстовом файле \"%s\" - %d%n", super.getFileName(), numberOfPages);
     }
     
 }

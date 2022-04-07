@@ -9,74 +9,95 @@ public class MediaFiles extends FilesAbstract {
         super(fileName, fileSize);
         setMediafileFormat(mediafileFormat);
         setMediaFileDescription(mediaFileDescription);
-        mediaDuration = new MediaDuration(hour, minute, second);
+        setMediaDuration(new MediaDuration(hour, minute, second));
     }
     public String getMediafileFormat() {
         return mediafileFormat;
     }
     public final void setMediafileFormat(String mediafileFormat) {
-        if(mediafileFormat == null)
-            throw new IllegalArgumentException("Необходимо указать формат файла.");
-        
-        this.mediafileFormat = mediafileFormat;
+        if (mediafileFormat != null && !mediafileFormat.trim().isEmpty())
+            this.mediafileFormat = mediafileFormat.trim();
+        else
+            throw new IllegalArgumentException("Необходимо указать формат файла.");       
     }
+    
     public String getMediaFileDescription() {
         return mediaFileDescription;
     }
+    
     public final void setMediaFileDescription(String mediaFileDescription) {
-        if(mediaFileDescription == null)
-            throw new IllegalArgumentException("Поле <mediaFileDescription> не может пустым.");
-        
-        this.mediaFileDescription = mediaFileDescription;
+        if (mediaFileDescription != null && !mediaFileDescription.trim().isEmpty())
+            this.mediaFileDescription = mediaFileDescription.trim();
+        else
+            throw new IllegalArgumentException("Поле <mediaFileDescription> не может пустым.");        
     }
+    
     public MediaDuration getMediaDuration() {
         return mediaDuration;
     }
-    public void setMediaDuration(MediaDuration mediaDuration) {
-        if(mediaDuration == null)
+    public final void setMediaDuration(MediaDuration mediaDuration) {
+        if(mediaDuration != null)
+           this.mediaDuration = mediaDuration;
+        else
             throw new IllegalArgumentException("Ссылка на объект <mediaDuration> не должна быть пустой");
-        this.mediaDuration = mediaDuration;
     }
+    
+    //методы, при помощи которых можно напечатать строковое представление размера изображения и длительности медиа файла   
     @Override
-    public void print() {
+    public void printFeatures() {
         System.out.printf("Длительность медиафайла %s составляет - часов:%02d, минут:%02d, секунд:%02d.%n", super.getFileName(), mediaDuration.hour, mediaDuration.minute, mediaDuration.second);
     }
     
-public static class MediaDuration {
+    //вложенный класс MediaDuration для хранения данных о длительности медиафайла
+    
+public class MediaDuration {
         
-        int hour, minute, second;
+        private int hour; 
+        private int minute;
+        private int second;
 
         public MediaDuration(int hour, int minute, int second) {
-            if(hour == 0 && minute == 0 && second == 0)
-              throw new IllegalArgumentException("Длительность медиафайла должна быть больше ноля.");
-            setHour(hour);
-            setMinute(minute);
-            setSecond(second);
+           if(!(hour == 0 & minute == 0 & second == 0)) {
+             setHour(hour);
+             setMinute(minute);
+             setSecond(second); }
+           else
+             throw new IllegalArgumentException("Длительность файла должна быть больше ноля.");           
         }
+        
+        //getter’ы для доступа к полям класса MediaDuration
         public int getHour() {
             return hour;
         }
-        public final void setHour(int hour) {
-            if(hour < 0)
-                throw new IllegalArgumentException("Параметры времени не могут иметь отрицательное значение.");
-            this.hour = hour;
-        }
+        
         public int getMinute() {
             return minute;
         }
-        public final void setMinute(int minute) {
-            if(minute < 0)
-                throw new IllegalArgumentException("Параметры времени не могут иметь отрицательное значение.");
-            this.minute = minute;
-        }
+        
         public int getSecond() {
             return second;
-        }
-        public final void setSecond(int second) {
-            if(second < 0)
+        }   
+        
+        //setter’ы для изменения полей класса MediaDuration
+        public final void setHour(int hour) {
+            if(hour >= 0)
+                this.hour = hour;
+            else
                 throw new IllegalArgumentException("Параметры времени не могут иметь отрицательное значение.");
-            
-            this.second = second;
+        }
+        
+        public final void setMinute(int minute) {
+            if(minute >= 0)
+                this.minute = minute;
+            else
+                throw new IllegalArgumentException("Параметры времени не могут иметь отрицательное значение.");
+        }  
+        
+        public final void setSecond(int second) {
+            if(second >= 0)
+               this.second = second;  
+            else  
+               throw new IllegalArgumentException("Параметры времени не могут иметь отрицательное значение.");           
         }        
     }
 }
